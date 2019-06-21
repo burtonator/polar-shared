@@ -1,0 +1,31 @@
+{
+  "name": "polar-shared",
+  "version": "1.19.8",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "scripts/test-runner.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/burtonator/polar-shared.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/burtonator/polar-shared/issues"
+  },
+  "homepage": "https://github.com/burtonator/polar-shared#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "@types/twitter-text": "^2.0.0",
+    "twitter-text": "^3.0.0"
+  }
+}
