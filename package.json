@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@types/twitter-text": "^2.0.0",
+    "timekeeper": "^2.2.0",
     "twitter-text": "^3.0.0"
   }
 }
