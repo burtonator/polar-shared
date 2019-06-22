@@ -2,11 +2,6 @@ import {Tag} from '../tags/Tags';
 import {ISODateString} from '../metadata/ISODateTimeStrings';
 import {ISODateTimeString} from '../metadata/ISODateTimeStrings';
 
-export class DocRefs {
-
-}
-
-
 /**
  * A more lightweight document reference for using in GroupDoc and other places
  * where a doc is needed.
