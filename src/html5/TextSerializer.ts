@@ -3,7 +3,11 @@ import sanitizeHtml from 'sanitize-html';
 
 export class TextSerializer {
 
-    public static serialize(html: HTMLStr): PlainTextStr {
+    public static serialize(html?: HTMLStr): PlainTextStr | undefined {
+
+        if (! html) {
+            return undefined;
+        }
 
         return sanitizeHtml(html, {
 
