@@ -78,6 +78,11 @@ export class Strings {
 
 }
 
+/**
+ * A plain text string (not an HTML string) with all HTML stripped.
+ */
+export type PlainTextStr = string;
+
 export type HTMLStr = string;
 
 /**
@@ -95,3 +100,4 @@ export type PathStr = string;
  * prefix is assumed to be a path.
  */
 export type PathOrURLStr = string;
+
