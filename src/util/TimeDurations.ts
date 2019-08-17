@@ -131,8 +131,11 @@ export class TimeDurations {
      *
      * @param since
      * @param duration
+     * @param now The current time.
      */
-    public static hasElapsed(since: Date, duration: Duration, now: Date = new Date()) {
+    public static hasElapsed(since: Date | ISODateTimeString, duration: Duration, now: Date = new Date()) {
+
+        since = this.toDate(since);
 
         const durationMS = this.toMillis(duration);
 
@@ -146,17 +149,23 @@ export class TimeDurations {
 
     public static inWeeks(since: Date | ISODateTimeString, now: Date = new Date()) {
 
-        if (typeof since === 'string') {
-            since = ISODateTimeStrings.parse(since);
-        }
-
-        Preconditions.assert(since, value => value instanceof Date, "since not Date");
+        since = this.toDate(since);
 
         const delta = now.getTime() - since.getTime();
 
         const nrWeeks = Math.floor(delta / this.toMillis('1w'));
 
         return `${nrWeeks}w`;
+
+    }
+
+    private static toDate(date: Date | ISODateTimeString): Date {
+
+        if (typeof date === 'string') {
+            return ISODateTimeStrings.parse(date);
+        }
+
+        return date;
 
     }
 
