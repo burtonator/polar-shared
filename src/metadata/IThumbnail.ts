@@ -1,13 +1,11 @@
 import {ISODateTimeString} from "./ISODateTimeStrings";
-import {IImage} from "./IImage";
 
-export interface IScreenshot extends IImage {
-
+export interface IThumbnail {
 
     /**
      * The unique ID for this object.
      */
-    id: string;
+    readonly id: string;
 
     /**
      * The time this object was created

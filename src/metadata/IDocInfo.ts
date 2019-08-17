@@ -6,7 +6,7 @@ import {UUID} from "./UUID";
 import {Hashcode} from "./Hashcode";
 import {ReadingOverview} from "./ReadingOverview";
 import {Visibility} from "../datastore/Datastore";
-import {Attachment} from "./Attachment";
+import {IAttachment} from "./IAttachment";
 
 export interface IDocInfo {
 
@@ -182,7 +182,7 @@ export interface IDocInfo {
      */
     visibility?: Visibility;
 
-    attachments: {[id: string]: Attachment};
+    attachments: {[id: string]: IAttachment};
 
 }
 
@@ -245,4 +245,3 @@ export interface DiskUsage {
     readonly bytesUsed: number;
 }
 
-export type DocInfoLike = DocInfo | IDocInfo;

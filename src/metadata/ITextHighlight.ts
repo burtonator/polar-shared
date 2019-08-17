@@ -1,14 +1,23 @@
-import {HighlightColor, IBaseHighlight} from "./IBaseHighlight";
+import {TextRect} from "./TextRect";
+import {Text} from "./Text";
 import {Rect} from "../Rect";
 import {INote} from "./INote";
 import {IQuestion} from "./IQuestion";
 import {IFlashcard} from "./IFlashcard";
-import {ISODateTimeString} from "./ISODateTimeStrings";
-import { IRect } from "../IRect";
+import {IAnnotation} from "./IAnnotation";
+import {HighlightColor} from "./IBaseHighlight";
 import {IImage} from "./IImage";
-import {IAuthor} from "./IAuthor";
 
-export interface IAreaHighlight extends IBaseHighlight {
+export interface ITextHighlight extends IAnnotation {
+
+    readonly textSelections: { [id: number]: TextRect };
+
+    readonly text: Text | string;
+
+    /**
+     * User edited/revised text for the highlight.
+     */
+    readonly revisedText?: Text | string;
 
     readonly rects: { [key: number]: Rect };
     readonly image?: IImage;
@@ -16,11 +25,6 @@ export interface IAreaHighlight extends IBaseHighlight {
     readonly notes: { [key: string]: INote };
     readonly questions: { [key: string]: IQuestion };
     readonly flashcards: { [key: string]: IFlashcard };
-    readonly id: string;
-    readonly guid: string;
-    readonly created: ISODateTimeString;
-    readonly lastUpdated: ISODateTimeString;
-    readonly author?: IAuthor;
     readonly color?: HighlightColor;
 
 }
