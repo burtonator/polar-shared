@@ -96,8 +96,13 @@ export type URLStr = string;
 export type PathStr = string;
 
 /**
- * A string whichi can contain a URL or a path.  Anything without a scheme
+ * A string which can contain a URL or a path.  Anything without a scheme
  * prefix is assumed to be a path.
  */
 export type PathOrURLStr = string;
 
+/**
+ * An ID string is a string representing a unique ID like a database
+ * key or hashcode designed to be unique and not human readable.
+ */
+export type IDStr = string;
