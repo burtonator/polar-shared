@@ -1,6 +1,6 @@
 {
   "name": "polar-shared",
-  "version": "2.0.17",
+  "version": "2.0.18",
   "description": "",
   "scripts": {
     "test": "scripts/test-runner.sh"
