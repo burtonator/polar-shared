@@ -286,18 +286,6 @@ export class Dictionaries {
 
     }
 
-    public static toIDMap<T extends IDRecord>(values: ReadonlyArray<T>): IDMap<T> {
-
-        const result: IDMap<T> = {};
-
-        for (const value of values) {
-            result[value.id] = value;
-        }
-
-        return result;
-
-    }
-
 }
 
 
@@ -307,15 +295,3 @@ export interface DictionaryEntry<V> {
     readonly key: string;
     readonly value: V;
 }
-
-/**
- * An ID map is a map of records that have an id property.
- */
-export interface IDMap<T extends IDRecord> {
-    [id: string]: T;
-}
-
-export interface IDRecord {
-    readonly id: IDStr;
-}
-
