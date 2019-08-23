@@ -1,6 +1,6 @@
 {
   "name": "polar-shared",
-  "version": "2.0.18",
+  "version": "2.0.19",
   "description": "",
   "scripts": {
     "test": "scripts/test-runner.sh"
@@ -26,6 +26,7 @@
   "dependencies": {
     "@types/sanitize-html": "^1.20.1",
     "@types/twitter-text": "^2.0.0",
+    "chai-diff": "^1.0.1",
     "sanitize-html": "^1.20.1",
     "timekeeper": "^2.2.0",
     "twitter-text": "^3.0.0"
