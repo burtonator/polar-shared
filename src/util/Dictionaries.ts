@@ -170,7 +170,7 @@ export class Dictionaries {
                 continue;
             }
 
-            result[key] = this.sorted(value);
+            result[key] = this.onlyDefinedProperties(value);
         }
 
         return result;
