@@ -21,6 +21,23 @@ export class IDMaps {
         return values.map(current => current.id);
     }
 
+    public static fetch<T extends IDRecord>(map: IDMap<T>,
+                                            identifiers: ReadonlyArray<IDStr>): ReadonlyArray<T> {
+
+        const result: T[] = [];
+
+        for (const id of identifiers) {
+            const rec = map[id];
+
+            if (rec) {
+                result.push(rec);
+            }
+        }
+
+        return result;
+
+    }
+
 }
 
 /**
