@@ -49,5 +49,5 @@ workflows:
   version: 2
   parallel_workflow:
     jobs:
-      - build
+      - test
 
