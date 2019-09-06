@@ -1,5 +1,22 @@
 import {isPresent} from '../../Preconditions';
 
+/**
+ * A function that provides us with a value.
+ */
+export type ValueFunction<T> = () => NotFunction<T> | null | undefined;
+
+// https://stackoverflow.com/questions/24613955/is-there-a-type-in-typescript-for-anything-except-functions
+// tslint:disable-next-line:ban-types
+type NotFunction<T> = T extends Function ? never : T;
+
+/**
+ * Provides us with a value that we're looking for directly.  Either the literal
+ * value or an optional or null or undefined (when it's missing).  When
+ * we are using a function we might actually be faster as the function might
+ * not be invoked when we return fast.
+ */
+export type ValueReference<T> = NotFunction<T> | null | undefined | Optional<NotFunction<T>> | ValueFunction<T>;
+
 export class Optional<T> {
 
     constructor(value: T | undefined | null, name?: string) {
@@ -180,7 +197,7 @@ export class Optional<T> {
      * we could use lodash or a stream-like API but it's a bit easier to just
      * do it this way.
      */
-    public static first<T>(...values: Array<T | null | undefined | Optional<T>>): Optional<T> {
+    public static first<T>(...values: ReadonlyArray<ValueReference<T>>): Optional<T> {
 
         for (const value of values) {
 
@@ -188,6 +205,14 @@ export class Optional<T> {
 
             if (value instanceof Optional) {
                 val = value.getOrUndefined();
+            } else if (typeof value === 'function') {
+
+                // for some reason type script is complaining that we can't
+                // call the function. There must be some unusual type safety
+                // issue here I can't identify but I'm testing this now.
+                const valueFunction = <ValueFunction<T>> value;
+                val = valueFunction();
+
             } else {
                 val = value;
             }
@@ -199,6 +224,7 @@ export class Optional<T> {
         }
 
         return Optional.empty();
+
     }
 
     public static empty<T>(name?: string): Optional<T> {
