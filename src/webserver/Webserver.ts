@@ -13,6 +13,7 @@ import {FilePaths} from '../util/FilePaths';
 import {Rewrite, Rewrites} from "./Rewrites";
 import {PathToRegexps} from "./PathToRegexps";
 import {PathParams} from 'express-serve-static-core';
+import { PathStr } from '../util/Strings';
 
 const log = Logger.create();
 
@@ -28,6 +29,7 @@ export class Webserver implements WebRequestHandler {
     private readonly resourceRegistry: ResourceRegistry;
 
     private app?: Express;
+
     private server?: http.Server | https.Server;
 
     constructor(webserverConfig: WebserverConfig,
@@ -46,40 +48,7 @@ export class Webserver implements WebRequestHandler {
 
         express.static.mime.define({ 'text/html': ['chtml'] });
 
-        this.app = express();
-
-        // handle rewrites FIRST so that we can send URLs to the right destination
-        // before all other handlers.
-        this.registerRewrites();
-
-        this.app.use((req, res, next) => {
-
-            next();
-
-            if (req.path && req.path.endsWith('woff2')) {
-                res.set({ 'Cache-Control': `public, max-age=${STATIC_CACHE_MAX_AGE}, immutable` });
-            }
-
-        });
-
-        // TODO: add infinite caching if the files are woff2 web fonts...
-        this.app.use(serveStatic(this.webserverConfig.dir, {immutable: true}));
-
-        for (const page of ['login.html', 'index.html']) {
-
-            // handle explicit paths of /login.html and /index.html like we
-            // do in the webapp.
-
-            const pagePath =
-                FilePaths.join(this.webserverConfig.dir, 'apps', 'repository', page);
-
-            this.app.use(`/${page}`,
-                         serveStatic(pagePath, {immutable: true}));
-
-        }
-
-        this.app.use(express.json());
-        this.app.use(express.urlencoded());
+        this.app = Webserver.createApp(this.webserverConfig.dir, this.webserverConfig.rewrites);
 
         const requestLogger = (req: Request, res: Response, next: NextFunction) => {
             console.info(`${req.method} ${req.url}`);
@@ -124,6 +93,49 @@ export class Webserver implements WebRequestHandler {
 
         // log.info(`Webserver up and running on port
         // ${this.webserverConfig.port} with config: `, this.webserverConfig);
+
+    }
+
+    /**
+     * Create an express app that can be used with our server..
+     */
+    public static createApp(dir: PathStr,
+                            rewrites: ReadonlyArray<Rewrite> = []): Express {
+
+        const app = express();
+
+        // handle rewrites FIRST so that we can send URLs to the right destination
+        // before all other handlers.
+        this.registerRewrites(app, rewrites);
+
+        app.use((req, res, next) => {
+
+            next();
+
+            if (req.path && req.path.endsWith('woff2')) {
+                res.set({ 'Cache-Control': `public, max-age=${STATIC_CACHE_MAX_AGE}, immutable` });
+            }
+
+        });
+
+        // TODO: add infinite caching if the files are woff2 web fonts...
+        app.use(serveStatic(dir, {immutable: true}));
+
+        for (const page of ['login.html', 'index.html']) {
+
+            // handle explicit paths of /login.html and /index.html like we
+            // do in the webapp.
+
+            const pagePath = FilePaths.join(dir, 'apps', 'repository', page);
+
+            app.use(`/${page}`, serveStatic(pagePath, {immutable: true}));
+
+        }
+
+        app.use(express.json());
+        app.use(express.urlencoded());
+
+        return app;
 
     }
 
@@ -214,9 +226,7 @@ export class Webserver implements WebRequestHandler {
 
     }
 
-    private registerRewrites() {
-
-        const rewrites = this.webserverConfig.rewrites || [];
+    private static registerRewrites(app: Express, rewrites: ReadonlyArray<Rewrite> = []) {
 
         const computeRewrite = (url: string): Rewrite | undefined => {
 
@@ -236,7 +246,7 @@ export class Webserver implements WebRequestHandler {
 
         };
 
-        this.app!.use(function(req, res, next) {
+        app.use(function(req, res, next) {
 
             const rewrite = computeRewrite(req.url);
 
