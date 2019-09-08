@@ -3,7 +3,8 @@
   "version": "2.0.25",
   "description": "",
   "scripts": {
-    "test": "scripts/test-runner.sh"
+    "test": "scripts/test-runner.sh",
+    "compile": "npx tsc"
   },
   "repository": {
     "type": "git",
