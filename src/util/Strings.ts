@@ -83,6 +83,11 @@ export class Strings {
  */
 export type PlainTextStr = string;
 
+/**
+ * A plain text string (not an HTML string) with all HTML stripped.
+ */
+export type TextStr = string | PlainTextStr;
+
 export type HTMLStr = string;
 
 /**
