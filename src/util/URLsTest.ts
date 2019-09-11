@@ -26,7 +26,7 @@ describe('URLs', function() {
     });
 
     it("different site", function() {
-        assert.equal(URLs.absolute('http://www.cnn.com', 'https://app.getpolarized.io'), "http://www.cnn.com");
+        assert.equal(URLs.absolute('http://www.cnn.com', 'https://app.getpolarized.io'), "http://www.cnn.com/");
     });
 
     // TODO: this SHOULD work but it was breaking other code.
