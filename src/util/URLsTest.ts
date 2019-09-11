@@ -20,6 +20,15 @@ describe('URLs', function() {
         assert.equal(URLs.absolute('#hello', 'http://www.example.com'), "http://www.example.com/#hello");
     });
 
+    it('always absolute', function() {
+        assert.equal(URLs.absolute('/group/linux', 'https://app.getpolarized.io'), "https://app.getpolarized.io/group/linux");
+        assert.equal(URLs.absolute('https://app.getpolarized.io/group/linux', 'https://app.getpolarized.io'), "https://app.getpolarized.io/group/linux");
+    });
+
+    it("different site", function() {
+        assert.equal(URLs.absolute('http://www.cnn.com', 'https://app.getpolarized.io'), "http://www.cnn.com");
+    });
+
     // TODO: this SHOULD work but it was breaking other code.
     // it('absolute between different sites', function() {
     //     assert.equal(URLs.absolute('http://www.microsoft.com', 'http://www.example.com'), "http://www.example.com");
