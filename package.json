@@ -22,7 +22,7 @@
     "chai": "^4.2.0",
     "mocha": "^6.2.0",
     "tslint": "^5.19.0",
-    "typescript": "^3.6.2"
+    "typescript": "^3.6.3"
   },
   "dependencies": {
     "@types/sanitize-html": "^1.20.1",
