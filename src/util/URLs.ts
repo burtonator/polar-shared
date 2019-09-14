@@ -81,6 +81,31 @@ export class URLs {
     }
 
     /**
+     * Return the path component of a URL.
+     */
+    public static pathname(url: string) {
+
+        if (url.startsWith('/')) {
+            // it's already a pathname
+            return url;
+        }
+
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            const prefixEnd = url.indexOf('://') + 3;
+            const start = url.indexOf('/', prefixEnd);
+
+            if (start === -1) {
+                return "/";
+            }
+
+            return url.substring(start);
+        }
+
+        throw new Error("Unable to parse URL path: " + url);
+
+    }
+
+    /**
      * Return true if the given URL exists by performing a HEAD request on it.
      */
     public static async existsWithHEAD(url: URLStr): Promise<boolean> {

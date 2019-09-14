@@ -29,6 +29,16 @@ describe('URLs', function() {
         assert.equal(URLs.absolute('http://www.cnn.com', 'https://app.getpolarized.io'), "http://www.cnn.com/");
     });
 
+    it("pathname", function() {
+        assert.equal(URLs.pathname('/'), "/");
+        assert.equal(URLs.pathname('/foo'), "/foo");
+        assert.equal(URLs.pathname('http://www.example.com/'), "/");
+        assert.equal(URLs.pathname('http://www.example.com/foo'), "/foo");
+        assert.equal(URLs.pathname('https://www.example.com/'), "/");
+        assert.equal(URLs.pathname('https://www.example.com/foo'), "/foo");
+        assert.equal(URLs.pathname('https://www.example.com'), "/");
+    });
+
     // TODO: this SHOULD work but it was breaking other code.
     // it('absolute between different sites', function() {
     //     assert.equal(URLs.absolute('http://www.microsoft.com', 'http://www.example.com'), "http://www.example.com");
