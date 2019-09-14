@@ -1,4 +1,3 @@
-
 import timekeeper from 'timekeeper';
 import {DurationMS, DurationStr, TimeDurations} from '../util/TimeDurations';
 

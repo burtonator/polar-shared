@@ -1,4 +1,4 @@
-import {assertJSON} from '../test/Assertions';
+import {assertJSON} from '../../../polar-app-public/polar-test/src/test/Assertions';
 import {ArrayListMultimap} from "./Multimap";
 
 describe('Multimap', function() {
