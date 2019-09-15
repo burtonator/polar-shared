@@ -1,4 +1,4 @@
-import {Preconditions} from '../Preconditions';
+import {isPresent, Preconditions} from '../Preconditions';
 import {Optional} from './ts/Optional';
 
 export class Arrays {
@@ -247,6 +247,22 @@ class ArrayPosition<T> {
         this.prev = prev;
         this.curr = curr;
         this.next = next;
+    }
+
+}
+
+/**
+ * An array that might have missing items.
+ */
+export type SparseArray<T> = ReadonlyArray<T | undefined | null>;
+
+export class SparseArrays {
+
+    public static presentOnly<T>(values: SparseArray<T>): ReadonlyArray<T> {
+
+        return values.filter(current => isPresent(current))
+                      .map(current => current!);
+
     }
 
 }
