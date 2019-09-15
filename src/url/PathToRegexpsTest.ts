@@ -1,6 +1,18 @@
 import {assert} from 'chai';
-import {PathToRegexps} from "./PathToRegexps";
-import {Rewrites} from "../../../polar-shared-webserver/src/webserver/Rewrites";
+import {PathToRegexps, URLPathStr, URLRegularExpressionStr} from "./PathToRegexps";
+
+function matchesRegex(regex: URLRegularExpressionStr, path: URLPathStr): boolean {
+
+    const re = new RegExp(regex);
+    const matches = re.exec(path);
+
+    if (matches && matches[0] === path) {
+        return true;
+    }
+
+    return false;
+
+}
 
 describe('PathToRegexps', function() {
 
@@ -11,8 +23,9 @@ describe('PathToRegexps', function() {
 
         const regexp = PathToRegexps.pathToRegexp("/webapp/icon.png");
 
-        assert.ok(Rewrites.matchesRegex(regexp, '/webapp/icon.png'));
+        assert.ok(matchesRegex(regexp, '/webapp/icon.png'));
 
     });
 
 });
+

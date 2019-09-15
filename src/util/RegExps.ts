@@ -5,3 +5,5 @@ export class RegExps {
     }
 
 }
+
+export type RegexStr = string;

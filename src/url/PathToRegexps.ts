@@ -1,4 +1,4 @@
-import {RegExps} from "../util/RegExps";
+import {RegExps, RegexStr} from "../util/RegExps";
 
 /**
  * Takes a path with path-to-regex syntax and computed it as a regular expression.
@@ -12,7 +12,7 @@ export class PathToRegexps {
     //
     // WARNING: I tried but the typescript bindings aren't functional
 
-    public static pathToRegexp(pattern: string) {
+    public static pathToRegexp(pattern: string): URLRegularExpressionStr {
 
         pattern = RegExps.escape(pattern);
 
@@ -29,3 +29,5 @@ export class PathToRegexps {
  * management of the regular expressions.
  */
 export type URLPathStr = string;
+
+export type URLRegularExpressionStr = RegexStr;
