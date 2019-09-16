@@ -1,6 +1,7 @@
 import {NamedColor, RGBColor} from "./HighlightColor";
 import {IImage} from "./IImage";
 import {IRect} from "../util/rects/IRect";
+import {IAnnotation} from "./IAnnotation";
 
 /**
  * The set of highlight colors.  We also provide transparent for text you want
@@ -15,7 +16,7 @@ export interface HighlightRects {
     [key: string]: IRect;
 }
 
-export interface IBaseHighlight {
+export interface IBaseHighlight extends IAnnotation {
 
     /**
      * The rectangles where we need to place content for this highlights.
