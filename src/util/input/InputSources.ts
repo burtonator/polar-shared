@@ -1,7 +1,6 @@
 import {InputSource, InputSourceType, InputSourceValue} from './InputSource';
 import {URLs} from '../URLs';
 import {Files} from '../Files';
-import base = Mocha.reporters.base;
 
 export class InputSources {
 
