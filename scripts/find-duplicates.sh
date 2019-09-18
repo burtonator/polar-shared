@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ./scripts/find-duplicates.sh ../polar-bookshelf/web/js/
+
+
 # https://stackoverflow.com/questions/1494178/how-to-define-hash-tables-in-bash
 
 dir=${1}
