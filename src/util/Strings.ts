@@ -111,3 +111,8 @@ export type PathOrURLStr = string;
  * key or hashcode designed to be unique and not human readable.
  */
 export type IDStr = string;
+
+/**
+ * An email address string.
+ */
+export type EmailStr = string;
