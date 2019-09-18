@@ -32,9 +32,7 @@ for file in `find src -name '*.ts'`; do
     src_md5=$(md5sum ${src_file})
     shared_md5=$(md5sum ${shared_file})
 
-
-
-    if [ "" == "" ]; then
+    if [ "${src_md5}" == "${shared_md5}" ]; then
       echo "EXACT MATCH: ${shared_file} vs ${src_file}"
     else
       echo "POSSIBLE MATCH: ${shared_file} vs ${src_file}"
@@ -43,3 +41,10 @@ for file in `find src -name '*.ts'`; do
   fi
 
 done
+
+
+###
+#
+# import (.*) from ['"][^'"]+/Preconditions['"];
+#
+# import $1 from 'polar-shared/src/Preconditions';
