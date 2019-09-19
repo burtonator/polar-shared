@@ -1,9 +1,9 @@
-import {DurationStr, TimeDurations} from "./TimeDurations";
-import {Latch} from './Latch';
-
 /**
  * A Provider is just a function that returns a given type.
  */
+import {DurationStr, TimeDurations} from "./TimeDurations";
+import {Latch} from "./Latch";
+
 export type Provider<T> = () => T;
 
 /**
