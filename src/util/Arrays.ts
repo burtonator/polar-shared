@@ -266,3 +266,16 @@ export class SparseArrays {
     }
 
 }
+
+/**
+ * Make this an array if it's given to us undefined by using a null object.
+ */
+export function asArray<T>(arr: ReadonlyArray<T> | undefined | null): ReadonlyArray<T> {
+
+    if (arr) {
+        return arr;
+    }
+
+    return [];
+
+}
