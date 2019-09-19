@@ -1,6 +1,6 @@
 import {Dictionaries} from './Dictionaries';
-import {assertJSON} from '../../../polar-bookshelf/web/js/test/Assertions';
 import {assert} from 'chai';
+import { assertJSON } from 'polar-test/src/test/Assertions';
 
 describe('Dictionaries', function() {
 

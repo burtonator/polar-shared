@@ -1,8 +1,8 @@
-import {Preconditions} from '../Preconditions';
 import {keccak256} from 'js-sha3';
 import uuid from 'uuid';
 import {InputSource} from './input/InputSource';
 import {InputData, InputSources} from './input/InputSources';
+import { Preconditions } from '../Preconditions';
 
 // TODO: migrate this to use types or build our own API for base58check direclty.
 const base58check = require("base58check");
@@ -81,7 +81,7 @@ export class Hashcodes {
      */
     public static createID(obj: any, len = 10) {
 
-        const id = Hashcodes.create(JSON.stringify(obj));
+        const id = this.create(JSON.stringify(obj));
 
         // truncate.  We don't need that much precision against collision.
         return id.substring(0, len);
