@@ -1,9 +1,7 @@
-import {Blobs} from './Blobs';
-import {ArrayBuffers} from './ArrayBuffers';
-import {Strings} from './Strings';
-import {URLStr} from './Strings';
 
-// import fetch from './Fetch';
+import {Strings, URLStr} from "./Strings";
+import {ArrayBuffers} from "./ArrayBuffers";
+import {Blobs} from "./Blobs";
 
 export class URLs {
 
