@@ -1,5 +1,5 @@
 import {isPresent, Preconditions} from '../Preconditions';
-import {Optional} from './ts/Optional';
+import {Optional} from "../../../polar-bookshelf/web/js/util/ts/Optional";
 
 export class Arrays {
 
@@ -290,4 +290,3 @@ export function asArray<T>(arr: ReadonlyArray<T> | undefined | null): ReadonlyAr
     return [];
 
 }
-
