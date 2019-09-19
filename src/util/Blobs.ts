@@ -1,5 +1,8 @@
 import * as stream from 'stream';
-import {ArrayBuffers} from './ArrayBuffers';
+import {Logger} from "../logger/Logger";
+import { ArrayBuffers } from './ArrayBuffers';
+
+const log = Logger.create();
 
 export class Blobs {
 
@@ -114,7 +117,7 @@ export class Blobs {
             pushAsync()
                 .catch(err => {
                     // we had an issue pushing data so notify the reader
-                    console.error("Unable to stream data: ", err);
+                    log.error("Unable to stream data: ", err);
                     passThrough.emit('error', err);
                 });
         };
