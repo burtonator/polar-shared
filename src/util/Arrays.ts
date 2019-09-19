@@ -1,5 +1,5 @@
 import {isPresent, Preconditions} from '../Preconditions';
-import {Optional} from "../../../polar-bookshelf/web/js/util/ts/Optional";
+import {Optional} from "./ts/Optional";
 
 export class Arrays {
 
