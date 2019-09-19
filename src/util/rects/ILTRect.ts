@@ -1,9 +1,14 @@
+
+export interface MutableILTRect {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+}
 /**
  * A left/top rect.
  */
-export interface ILTRect {
-    readonly left: number;
-    readonly top: number;
-    readonly width: number;
-    readonly height: number;
+export interface ILTRect extends Readonly<MutableILTRect> {
+
 }
+

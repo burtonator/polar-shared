@@ -1,8 +1,11 @@
-export interface IRect {
-    readonly top: number;
-    readonly bottom: number;
-    readonly left: number;
-    readonly right: number;
-    readonly width: number;
-    readonly height: number;
+export interface MutableIRect {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+    width: number;
+    height: number;
+}
+
+export interface IRect extends Readonly<MutableIRect> {
 }
