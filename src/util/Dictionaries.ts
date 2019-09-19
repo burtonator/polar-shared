@@ -4,6 +4,14 @@ import {IDStr} from "./Strings";
 
 export class Dictionaries {
 
+    /**
+     * Convert a dictionary to number keys. In JS all dictionaries use string keys
+     * but TS supports string keys.
+     */
+    public static numberKeys<T>(dict: {[key: number]: T}): ReadonlyArray<number> {
+        return Object.keys(dict).map(current => parseInt(current));
+    }
+
     public static values<T>(dict: {[key: string]: T} | undefined | null): T[] {
 
         const result: T[] = [];
@@ -68,6 +76,8 @@ export class Dictionaries {
      */
     public static sorted(dict: any): any {
 
+        // TODO: this doesn't handle circular reference well and will chase its tail.
+
         if (dict === undefined || dict === null) {
             // nothing to do here.
             return dict;
@@ -77,7 +87,6 @@ export class Dictionaries {
             // if we're not a dictionary we're done
             return dict;
         }
-
 
         if (Array.isArray(dict)) {
 
@@ -93,9 +102,11 @@ export class Dictionaries {
 
             const result: any = {};
 
-            Object.keys(dict).sort().forEach(key => {
+            const sortedKeys = Object.keys(dict).sort();
+
+            for (const key of sortedKeys) {
                 result[key] = this.sorted(dict[key]);
-            });
+            }
 
             return result;
 
@@ -103,7 +114,7 @@ export class Dictionaries {
 
     }
 
-    public static deepCopy(dict: any): any {
+    public static deepCopy(dict: any): object {
 
         if (dict === undefined || dict === null) {
             // nothing to do here.
@@ -114,7 +125,6 @@ export class Dictionaries {
             // if we're not a dictionary we're done
             return dict;
         }
-
 
         if (Array.isArray(dict)) {
 
@@ -208,13 +218,13 @@ export class Dictionaries {
     /**
      * Easily convert an array to a dict.
      */
-    public static toDict<V>(values: V[], converter: (value: V) => string): {[key: string]: V} {
+    public static toDict<V>(values: ReadonlyArray<V>, converter: (value: V) => string): {[key: string]: V} {
 
         const result: { [key: string]: V } = {};
 
-        values.forEach(value => {
+        for (const value of values) {
             result[converter(value)] = value;
-        });
+        }
 
         return result;
 
@@ -283,6 +293,18 @@ export class Dictionaries {
         }
 
         return Object.values(dict).length === 0;
+
+    }
+
+    public static clear(dict: {[key: string]: any} | null | undefined) {
+
+        if ( ! dict) {
+            return;
+        }
+
+        for (const key of Object.keys(dict)) {
+            delete dict[key];
+        }
 
     }
 
