@@ -1,7 +1,7 @@
-import {Dictionaries} from "src/util/Dictionaries";
-import {Reducers} from "src/util/Reducers";
-import {Arrays} from "src/util/Arrays";
-import {ArrayListMultimap, Multimap} from "src/util/Multimap";
+import { Dictionaries } from "./Dictionaries";
+import {Reducers} from "./Reducers";
+import {ArrayListMultimap, Multimap} from "./Multimap";
+import {Arrays} from "./Arrays";
 
 /**
  * Keeps track of hits for a given key...
