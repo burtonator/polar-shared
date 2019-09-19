@@ -53,7 +53,7 @@ describe('Optional', function() {
         assert.equal(Optional.first<string>(() => "cat").get(), "cat");
 
         assert.equal(Optional.first<string>(() => "cat",
-            () => "dog").get(), "cat");
+                                            () => "dog").get(), "cat");
 
     });
 
