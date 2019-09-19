@@ -1,5 +1,5 @@
-import {isPresent, Preconditions} from '../Preconditions';
-import {Optional} from './ts/Optional';
+import {isPresent, Preconditions} from "../Preconditions";
+import {Optional} from "./ts/Optional";
 
 export class Functions {
 
@@ -160,10 +160,10 @@ export class Functions {
         for (let idx = 0; idx < arrayLikeObject.length; ++idx) {
 
             result.push({
-                            curr: arrayLikeObject[idx],
-                            prev: Optional.of(arrayLikeObject[idx - 1]).getOrElse(null),
-                            next: Optional.of(arrayLikeObject[idx + 1]).getOrElse(null)
-                        });
+                curr: arrayLikeObject[idx],
+                prev: Optional.of(arrayLikeObject[idx - 1]).getOrElse(null),
+                next: Optional.of(arrayLikeObject[idx + 1]).getOrElse(null)
+            });
 
         }
 
@@ -171,6 +171,29 @@ export class Functions {
 
     }
 
+
+    /**
+     * Create a function that is a singleton and only runs once.
+     */
+    public static createAsyncSingleton(delegate: () => Promise<void>) {
+
+        let executed: boolean = false;
+
+        return async () => {
+
+            if (executed) {
+                return;
+            }
+
+            try {
+                await delegate();
+            } finally {
+                executed = true;
+            }
+
+        };
+
+    }
 
 }
 
