@@ -3,7 +3,18 @@ import {Optional} from './ts/Optional';
 
 export class Arrays {
 
+    public static onlyDefined<T>(values: ReadonlyArray<T | undefined>): ReadonlyArray<T> {
+
+        return values.filter(current => current !== undefined)
+                     .map(current => current!);
+
+    }
+
     public static first<T>(values: ReadonlyArray<T>): T | undefined {
+
+        if (! values) {
+            return undefined;
+        }
 
         if (values.length === 0) {
             return undefined;
