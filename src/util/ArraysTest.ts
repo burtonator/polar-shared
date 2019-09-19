@@ -1,6 +1,6 @@
 import {assert} from 'chai';
-import {assertJSON} from '../test/Assertions';
-import {Arrays} from "polar-shared/src/util/Arrays";
+import {assertJSON} from "polar-test/src/test/Assertions";
+import {Arrays} from "./Arrays";
 
 describe('Arrays', function() {
 
