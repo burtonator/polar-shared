@@ -1,4 +1,4 @@
-import {Uint8Arrays} from './Uint8Arrays';
+import {Uint8Arrays} from "./Uint8Arrays";
 
 export class ArrayBuffers {
 
