@@ -1,6 +1,8 @@
 import {assert} from 'chai';
 import {BrowserFilePaths, FilePaths} from './FilePaths';
 import {Files} from './Files';
+import fetch from './Fetch';
+import {isPresent} from 'src/Preconditions';
 
 describe('FilePaths', function() {
 

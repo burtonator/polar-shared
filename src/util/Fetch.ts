@@ -1,5 +1,3 @@
-// TODO: duplicated with polar-bookshelf.  Move to polar-shared
-
 import {Request, RequestInit, Response} from 'node-fetch';
 
 import {default as node_fetch} from 'node-fetch';
