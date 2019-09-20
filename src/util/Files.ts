@@ -6,6 +6,7 @@ import {isPresent, Preconditions} from "../Preconditions";
 import {FilePaths} from "./FilePaths";
 import {Providers} from "./Providers";
 import {DurationStr, TimeDurations} from './TimeDurations';
+import {StreamRangeFactory} from "./Streams";
 
 const ENABLE_ATOMIC_WRITES = true;
 
@@ -350,6 +351,14 @@ export class Files {
 
     public static createReadStream(path: PathLike, options?: CreateReadStreamOptions): fs.ReadStream {
         return fs.createReadStream(path, options);
+    }
+
+    public static createReadStreamForRange(path: PathLike): StreamRangeFactory {
+
+        return (start: number, end: number) => {
+            return fs.createReadStream(path, {start, end});
+        }
+
     }
 
     public static createWriteStream(path: PathLike, options?: CreateWriteStreamOptions): fs.WriteStream {
