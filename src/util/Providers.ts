@@ -4,6 +4,11 @@
 import {DurationStr, TimeDurations} from "./TimeDurations";
 import {Latch} from "./Latch";
 
+/**
+ * A literal value or a provider value.
+ */
+export type LiteralOrProvider<T> = T | Provider<T>;
+
 export type Provider<T> = () => T;
 
 /**
@@ -14,6 +19,20 @@ export interface IProvider<T> {
 }
 
 export class Providers {
+
+    /**
+     * Get the value of a literal or the provider directly.
+     * @param value
+     */
+    public static toValue<T>(value: LiteralOrProvider<T>): T {
+
+        if (typeof value === 'function') {
+            return (<any> value)();
+        }
+
+        return value;
+
+    }
 
     /**
      * Convert a provider interface to a function.
