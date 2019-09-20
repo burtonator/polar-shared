@@ -151,6 +151,8 @@ export class TimeDurations {
 
         since = this.toDate(since);
 
+        Preconditions.assert(since, value => value instanceof Date, "since not Date");
+
         const delta = now.getTime() - since.getTime();
 
         const nrWeeks = Math.floor(delta / this.toMillis('1w'));
