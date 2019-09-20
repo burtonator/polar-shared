@@ -1,8 +1,6 @@
 import {assert} from 'chai';
 import {BrowserFilePaths, FilePaths} from './FilePaths';
 import {Files} from './Files';
-import fetch from './Fetch';
-import {isPresent} from 'src/Preconditions';
 
 describe('FilePaths', function() {
 
@@ -12,7 +10,7 @@ describe('FilePaths', function() {
         it("basic", function() {
             assert.isTrue(FilePaths.hasExtension('foo.pdf', 'pdf'));
             assert.isTrue(FilePaths.hasExtension('foo.PDF', 'pdf'));
-            assert.isTrue(FilePaths.hasExtension('foo.pdf', 'PDF'));             4
+            assert.isTrue(FilePaths.hasExtension('foo.pdf', 'PDF'));
             assert.isTrue(FilePaths.hasExtension('foo.PDF', 'PDF'));
             assert.isTrue(FilePaths.hasExtension('foo.pdf', '.pdf'));
             assert.isTrue(FilePaths.hasExtension('foo.PDF', '.pdf'));

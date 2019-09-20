@@ -1,4 +1,4 @@
-import {Request, RequestInit, Response} from 'node-fetch';
+import {Request, Response, BodyInit} from 'node-fetch';
 
 import {default as node_fetch} from 'node-fetch';
 
@@ -35,7 +35,7 @@ export class MockFetch {
 
 // we have to use a custom RequestInit to be compatible with node_fetch and window.fetch
 export interface RequestInit {
-    body?: string ;
+    body?: BodyInit;
     cache?: RequestCache;
     credentials?: RequestCredentials;
     headers?: {[key: string]: string};
@@ -46,6 +46,7 @@ export interface RequestInit {
     redirect?: RequestRedirect;
     referrer?: string;
     referrerPolicy?: ReferrerPolicy;
-    signal?: AbortSignal | null;
+    // signal?: AbortSignal | null;
     window?: any;
 }
+
