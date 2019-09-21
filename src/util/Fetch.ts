@@ -50,3 +50,13 @@ export interface RequestInit {
     window?: any;
 }
 
+export class Fetches {
+
+    /**
+     * Syntactic sugar so we can call this easier using auto-completion.
+     */
+    public static fetch(url: string | Request, init?: RequestInit): Promise<Response> {
+        return fetch(url, init);
+    }
+
+}
