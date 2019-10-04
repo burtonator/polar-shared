@@ -1,12 +1,33 @@
 import {Strings} from '../util/Strings';
 import {DurationStr, TimeDurations} from '../util/TimeDurations';
 
+// TODO: these should all be Str not String
+
+/**
+ * An ISO Date with a Time
+ */
 export type ISODateTimeString = string;
+
+
+/**
+ * An ISO date with just year
+ */
+export type ISODateYearString = string;
+
+/**
+ * An ISO date with just year, and month
+ */
+export type ISODateYearMonthString = string;
+
+/**
+ * An ISO date with just year, month, and day.
+ */
+export type ISODateYearMonthDayString = string;
 
 /**
  * An ISO Date string without a time.
  */
-export type ISODateString = string;
+export type ISODateString = ISODateYearMonthDayString;
 
 /**
  * Time represented as the number of milliseconds since Jan 1, 1970.
