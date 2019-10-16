@@ -1,11 +1,13 @@
 import {Fetches} from "./Fetch";
+import {Streams} from "./Streams";
 
 describe('Fetch', function() {
 
     it("basic", async function() {
 
-        Fetches.fetch
+        const response = await Fetches.fetch('http://www.example.com');
 
+        await Streams.toArray(response.body);
 
     });
 
