@@ -10,16 +10,18 @@ declare var window: any;
  * implementation directly without needing a backend server to implement the
  * methods.
  */
-export default function fetch(url: string | Request, init?: RequestInit): Promise<Response> {
+function fetchDelegate(url: string | Request, init?: RequestInit): Promise<Response> {
 
     if (MockFetch.response) {
         return Promise.resolve(MockFetch.response);
     }
 
     if (typeof window !== 'undefined' && window.fetch) {
+        // we're running in the browser so take that route
         return window.fetch(url, init);
     }
 
+    // we're running in node so use node_fetch.
     return node_fetch(url, init);
 
 }
@@ -56,7 +58,7 @@ export class Fetches {
      * Syntactic sugar so we can call this easier using auto-completion.
      */
     public static fetch(url: string | Request, init?: RequestInit): Promise<Response> {
-        return fetch(url, init);
+        return fetchDelegate(url, init);
     }
 
 }
