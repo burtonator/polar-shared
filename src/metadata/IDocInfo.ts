@@ -7,6 +7,7 @@ import {Hashcode} from "./Hashcode";
 import {ReadingOverview} from "./ReadingOverview";
 import {IAttachment} from "./IAttachment";
 import {Visibility} from "../datastore/Visibility";
+import {IDocAuthor} from "./IDocAuthor";
 
 export interface IDocInfo {
 
@@ -172,6 +173,16 @@ export interface IDocInfo {
      */
     published?: ISODateString | ISODateTimeString;
 
+    /**
+     * The name of the publisher for this document.  This is the name of the
+     * academic journal, newspaper, website, etc.
+     */
+    publisher?: string;
+
+    /**
+     * The DOI (document identifier) for this document.  This is either provided
+     * by the user or found via metadata when adding the PDF.
+     */
     doi?: string;
 
     readingPerDay?: ReadingOverview;
@@ -183,6 +194,8 @@ export interface IDocInfo {
     visibility?: Visibility;
 
     attachments: {[id: string]: IAttachment};
+
+    authors?: ReadonlyArray<IDocAuthor>;
 
 }
 
