@@ -12,6 +12,8 @@ const ENABLE_ATOMIC_WRITES = true;
 
 const log = Logger.create();
 
+export type StreamFactory = () => NodeJS.ReadableStream;
+
 // noinspection TsLint
 class Promised {
 
@@ -386,7 +388,7 @@ export class Files {
      * If `flag` is not supplied, the default of `'w'` is used.
      */
     public static async writeFileAsync(path: string,
-                                       data: FileHandle | NodeJS.ReadableStream | Buffer | string,
+                                       data: FileHandle | NodeJS.ReadableStream | Buffer | string | StreamFactory,
                                        options: WriteFileAsyncOptions = {}) {
 
         // copy of the original path when we are doing atomic writes.
@@ -440,7 +442,7 @@ export class Files {
      * Write a file async (directly) without any atomic handling.
      */
     private static async _writeFileAsync(path: string,
-                                         data: FileHandle | NodeJS.ReadableStream | Buffer | string,
+                                         data: FileHandle | NodeJS.ReadableStream | Buffer | string | StreamFactory,
                                          options: WriteFileAsyncOptions = {}) {
 
         if (data instanceof Buffer || typeof data === 'string') {
@@ -451,7 +453,7 @@ export class Files {
 
             const existing = options.existing ? options.existing : 'copy';
 
-            const fileRef = <FileHandle> data;
+            const fileRef = <FileHandle>data;
 
             if (existing === 'link') {
 
@@ -481,7 +483,17 @@ export class Files {
 
         } else {
 
-            const readableStream = <NodeJS.ReadableStream> data;
+            const convertToStream = () => {
+
+                if (typeof data === 'function') {
+                    return data();
+                }
+
+                return <NodeJS.ReadableStream> data;
+
+            };
+
+            const readableStream = convertToStream();
 
             if (! readableStream.pipe) {
                 log.error("Given invalid data to copy: ", data);
