@@ -1,4 +1,5 @@
 import * as readline from 'readline';
+import {ProgressListener, ProgressTracker, ProgressTrackerInit} from "./ProgressTracker";
 
 export class Streams {
 
@@ -65,6 +66,33 @@ export class Streams {
                 completion();
             }
 
+        });
+
+    }
+
+    /**
+     *
+     * @param stream The stream we're reading from.
+     * @param init The metadata on the progress tracker to use.
+     * @param listener The listener to receive callbacks.
+     */
+    public static toProgressStream(stream: NodeJS.ReadableStream,
+                                   init: ProgressTrackerInit,
+                                   listener: ProgressListener) {
+
+        let bytesRead = 0;
+
+        const progressTracker = new ProgressTracker(init);
+
+        listener(progressTracker.peek());
+
+        stream.on('data', (chunk: Uint8Array) => {
+            bytesRead += chunk.length;
+        });
+
+        stream.on('end', () => {
+            // issue one final event when we're done.
+            listener(progressTracker.terminate());
         });
 
     }
