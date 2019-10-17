@@ -1,6 +1,25 @@
-
+/**
+ * A single character
+ */
+export type Char = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k'
+    | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x'
+    | 'y' | 'z' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K'
+    | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X'
+    | 'Y' | 'Z' | '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 
 export class Strings {
+
+    public static generate(len: number, c: Char = 'x') {
+
+        let buff = "";
+
+        for(let i = 0; i < len; ++i) {
+            buff += c;
+        }
+
+        return buff;
+
+    }
 
     public static toPrimitive(value: string): string | number | boolean {
 
@@ -19,7 +38,6 @@ export class Strings {
         return value;
 
     }
-
 
     /**
      * Convert the string to a number or return the default value.
