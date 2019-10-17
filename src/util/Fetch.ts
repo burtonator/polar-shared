@@ -1,6 +1,8 @@
 import {Request, Response, BodyInit} from 'node-fetch';
 
 import {default as node_fetch} from 'node-fetch';
+import {Optional} from "./ts/Optional";
+import { ProgressListener } from './ProgressTracker';
 
 declare var window: any;
 
@@ -57,8 +59,29 @@ export class Fetches {
     /**
      * Syntactic sugar so we can call this easier using auto-completion.
      */
-    public static fetch(url: string | Request, init?: RequestInit): Promise<Response> {
-        return fetchDelegate(url, init);
+    public static async fetch(url: string | Request, init?: RequestInit): Promise<Response> {
+
+        const response = await fetchDelegate(url, init);
+
+        const contentLength =
+            Optional.of(response.headers.get('content-length'))
+                .map(value => parseInt(value))
+                .getOrUndefined();
+
+        if (contentLength) {
+
+        }
+
+        return response;
+    }
+
+}
+
+export class Responses {
+
+    public static toProgressStream(stream: NodeJS.ReadableStream, listener: ProgressListener) {
+
+
     }
 
 }
