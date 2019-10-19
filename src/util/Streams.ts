@@ -2,6 +2,53 @@
 import {Progress, ProgressListener, ProgressTracker, ProgressTrackerInit} from "./ProgressTracker";
 import {PassThrough, Duplex} from "stream";
 
+export interface ToLinesInput {
+    readonly stream: NodeJS.ReadableStream;
+    readonly encoding?: BufferEncoding;
+}
+
+export class LineSplitter {
+
+    private data: string = "";
+
+    public constructor(private onLine: (line: string) => void) {
+    }
+
+    public onData(str: string) {
+
+        const split = str.split("\n");
+
+        if (split.length === 1) {
+            // there is no split in the string so just append the data.
+            this.data = this.data + split[0];
+        } else {
+            const line = this.data  + split[0];
+            this.onLine(line);
+            this.data = "";
+        }
+
+        for(let idx = 1; idx < split.length - 1; ++idx) {
+            const line = split[idx];
+            this.onLine(line);
+        }
+
+        if (split.length > 1) {
+            // the remaining data is the end of the line.
+            this.data = split[split.length - 1];
+        }
+
+    }
+
+    public close() {
+
+        if (this.data.length !== 0) {
+            this.onLine(this.data);
+        }
+
+    }
+
+}
+
 export class Streams {
 
     public static isValidStream(stream: NodeJS.ReadableStream): boolean {
@@ -48,6 +95,7 @@ export class Streams {
         });
 
     };
+
     //
     // /**
     //  * Listen to a stream of lines
@@ -57,32 +105,50 @@ export class Streams {
     //  * @param completion Called when the stream is finished.  The err param
     //  *                   is given when it failed.
     //  */
-    // public static toLines(input: NodeJS.ReadableStream,
-    //                       handler: (line: string) => void,
-    //                       completion: (err?: Error) => void) {
-    //
-    //     const readInterface = readline.createInterface({input});
-    //
-    //     readInterface.on('line', line => {
-    //         handler(line);
-    //     });
-    //
-    //     let err: Error | undefined;
-    //
-    //     input.once('error', (error: Error) => {
-    //         completion(err = error);
-    //     });
-    //
-    //     readInterface.on('close', () => {
-    //
-    //         if (! err) {
-    //             // signal that we've completed but only when we haven't had an error.
-    //             completion();
-    //         }
-    //
-    //     });
-    //
-    // }
+    public static toLines(input: ToLinesInput,
+                          onLine: (line: string) => void,
+                          onCompleted: (err?: Error) => void) {
+
+        const {stream} = input;
+        const encoding = input.encoding || 'utf-8';
+
+        const lineSplitter = new LineSplitter(onLine);
+
+        stream.on('data', (chunk: Uint8Array) => {
+            const buff = Buffer.from(chunk);
+            const str = buff.toString(encoding);
+            lineSplitter.onData(str);
+        });
+
+        let completed: boolean = false;
+
+        const handledCompleted = (error?: Error) => {
+
+            if (completed) {
+                return;
+            }
+
+            lineSplitter.close();
+
+            onCompleted(error);
+
+            completed = true;
+
+        };
+
+        stream.once('error', (error: Error) => {
+            handledCompleted(error);
+        });
+
+        stream.once('end', () => {
+            handledCompleted();
+        });
+
+        stream.once('close', () => {
+            handledCompleted();
+        });
+
+    }
 
     /**
      *
@@ -162,7 +228,6 @@ export class Streams {
  * @param end Where to end reading (inclusive)
  */
 export type StreamRangeFactory = (start: number, end: number) => NodeJS.ReadableStream;
-
 
 
 
