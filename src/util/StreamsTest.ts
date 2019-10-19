@@ -4,6 +4,8 @@ import {FilePaths} from "./FilePaths";
 import {Streams} from "./Streams";
 import {Strings} from "./Strings";
 import {assertJSON} from "polar-test/src/test/Assertions";
+import {Buffers} from "./Buffers";
+import {Latch} from "./Latch";
 
 describe('StreamsTest', function() {
 
@@ -37,6 +39,38 @@ describe('StreamsTest', function() {
             131072,
             196608
         ]);
+
+    });
+
+
+    it("toLines", async function() {
+
+        const buff = new Buffer("hello\nworld\n");
+        const stream = Buffers.toStream(buff);
+
+        const lines: string[] = [];
+
+        const onLine = (line: string) => {
+            lines.push(line);
+        };
+
+        const latch = new Latch();
+
+        const onCompletion = (err?: Error) => {
+
+            if  (err) {
+                latch.reject(err)
+            } else {
+                latch.resolve(null);
+            }
+
+        };
+
+        Streams.toLines(stream, onLine, onCompletion);
+
+        await latch.get();
+
+        assertJSON(lines, ['hello', 'world']);
 
     });
 
