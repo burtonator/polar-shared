@@ -1,6 +1,5 @@
-// import * as readline from 'readline';
 import {Progress, ProgressListener, ProgressTracker, ProgressTrackerInit} from "./ProgressTracker";
-import {PassThrough, Duplex} from "stream";
+import {PassThrough} from "stream";
 
 export interface ToLinesInput {
     readonly stream: NodeJS.ReadableStream;
