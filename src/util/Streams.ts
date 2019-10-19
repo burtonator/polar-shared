@@ -1,4 +1,4 @@
-import * as readline from 'readline';
+// import * as readline from 'readline';
 import {Progress, ProgressListener, ProgressTracker, ProgressTrackerInit} from "./ProgressTracker";
 import {PassThrough, Duplex} from "stream";
 
@@ -48,41 +48,41 @@ export class Streams {
         });
 
     };
-
-    /**
-     * Listen to a stream of lines
-     *
-     * @param input The stream to read and split into lines.
-     * @param handler The callback for each line.
-     * @param completion Called when the stream is finished.  The err param
-     *                   is given when it failed.
-     */
-    public static toLines(input: NodeJS.ReadableStream,
-                          handler: (line: string) => void,
-                          completion: (err?: Error) => void) {
-
-        const readInterface = readline.createInterface({input});
-
-        readInterface.on('line', line => {
-            handler(line);
-        });
-
-        let err: Error | undefined;
-
-        input.once('error', (error: Error) => {
-            completion(err = error);
-        });
-
-        readInterface.on('close', () => {
-
-            if (! err) {
-                // signal that we've completed but only when we haven't had an error.
-                completion();
-            }
-
-        });
-
-    }
+    //
+    // /**
+    //  * Listen to a stream of lines
+    //  *
+    //  * @param input The stream to read and split into lines.
+    //  * @param handler The callback for each line.
+    //  * @param completion Called when the stream is finished.  The err param
+    //  *                   is given when it failed.
+    //  */
+    // public static toLines(input: NodeJS.ReadableStream,
+    //                       handler: (line: string) => void,
+    //                       completion: (err?: Error) => void) {
+    //
+    //     const readInterface = readline.createInterface({input});
+    //
+    //     readInterface.on('line', line => {
+    //         handler(line);
+    //     });
+    //
+    //     let err: Error | undefined;
+    //
+    //     input.once('error', (error: Error) => {
+    //         completion(err = error);
+    //     });
+    //
+    //     readInterface.on('close', () => {
+    //
+    //         if (! err) {
+    //             // signal that we've completed but only when we haven't had an error.
+    //             completion();
+    //         }
+    //
+    //     });
+    //
+    // }
 
     /**
      *

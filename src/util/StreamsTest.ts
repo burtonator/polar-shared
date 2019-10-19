@@ -42,36 +42,36 @@ describe('StreamsTest', function() {
 
     });
 
-
-    it("toLines", async function() {
-
-        const buff = new Buffer("hello\nworld\n");
-        const stream = Buffers.toStream(buff);
-
-        const lines: string[] = [];
-
-        const onLine = (line: string) => {
-            lines.push(line);
-        };
-
-        const latch = new Latch();
-
-        const onCompletion = (err?: Error) => {
-
-            if  (err) {
-                latch.reject(err)
-            } else {
-                latch.resolve(null);
-            }
-
-        };
-
-        Streams.toLines(stream, onLine, onCompletion);
-
-        await latch.get();
-
-        assertJSON(lines, ['hello', 'world']);
-
-    });
+    //
+    // it("toLines", async function() {
+    //
+    //     const buff = new Buffer("hello\nworld\n");
+    //     const stream = Buffers.toStream(buff);
+    //
+    //     const lines: string[] = [];
+    //
+    //     const onLine = (line: string) => {
+    //         lines.push(line);
+    //     };
+    //
+    //     const latch = new Latch();
+    //
+    //     const onCompletion = (err?: Error) => {
+    //
+    //         if  (err) {
+    //             latch.reject(err)
+    //         } else {
+    //             latch.resolve(null);
+    //         }
+    //
+    //     };
+    //
+    //     Streams.toLines(stream, onLine, onCompletion);
+    //
+    //     await latch.get();
+    //
+    //     assertJSON(lines, ['hello', 'world']);
+    //
+    // });
 
 });
